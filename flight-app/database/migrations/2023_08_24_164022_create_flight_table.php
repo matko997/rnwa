@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('flight', function (Blueprint $table) {
             $table->id('flight_id');
-            $table->char('flightno', 8)->collation('utf8mb4_unicode_ci');
             $table->smallInteger('from');
             $table->smallInteger('to');
             $table->datetime('departure');
@@ -28,12 +27,10 @@ return new class extends Migration
             $table->index('arrival');
             $table->index('airline_id');
             $table->index('airplane_id');
-            $table->unique('flightno');
             $table->foreign('from')->references('airport_id')->on('airport');
             $table->foreign('to')->references('airport_id')->on('airport');
             $table->foreign('airline_id')->references('airline_id')->on('airline');
             $table->foreign('airplane_id')->references('airplane_id')->on('airplane');
-            $table->foreign('flightno')->references('flightno')->on('flightschedule');
         });
     }
 

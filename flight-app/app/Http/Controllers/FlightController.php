@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+
+use App\Models\Airline;
+use App\Models\Airplane;
+use App\Models\Airport;
 use App\Models\Flight;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class FlightController extends Controller
@@ -12,7 +17,8 @@ class FlightController extends Controller
      */
     public function index()
     {
-        //
+        $flights = Flight::with(['airplane.type','source','destination','airline'])->paginate(10);
+        return view('flights.index')->with(['flights' => $flights]);
     }
 
     /**
@@ -20,7 +26,10 @@ class FlightController extends Controller
      */
     public function create()
     {
-        //
+        $flights = Airport::all();
+        $airplanes = Airplane::with('type')->get();
+        $airlines = Airline::all();
+        return view('flights.create')->with(['flights'=>$flights,'airplanes'=>$airplanes,'airlines'=>$airlines]);
     }
 
     /**
@@ -28,7 +37,8 @@ class FlightController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Flight::create($request->except('_token'));
+        return redirect(route('flights.index'));
     }
 
     /**
@@ -58,8 +68,19 @@ class FlightController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Flight $flight)
+    public function destroy($id)
     {
-        //
+        try {
+            $flight = Flight::findOrFail($id);
+            $flight->delete();
+
+            return redirect()->route('flights.index')->with('success', 'Flight deleted successfully');
+        } catch (QueryException $e) {
+            if ($e->getCode() == 23000) {
+                return redirect()->route('flights.index')->with('error', 'Cannot delete this flight, it is associated with another entity');
+            }
+
+            return redirect()->route('flights.index')->with('error', 'Something went wrong, please try again later');
+        }
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Airline;
 use App\Models\Airport;
 use App\Models\Ariline;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class AirlineController extends Controller
@@ -71,7 +72,17 @@ class AirlineController extends Controller
      */
     public function destroy($id)
     {
-        Airline::destroy($id);
-        return redirect(route('airlines.index'));
+        try {
+            $airline = Airline::findOrFail($id);
+            $airline->delete();
+
+            return redirect()->route('airlines.index')->with('success', 'Airline deleted successfully');
+        } catch (QueryException $e) {
+            if ($e->getCode() == 23000) {
+                return redirect()->route('airlines.index')->with('error', 'Cannot delete this airline, it is associated with another entity');
+            }
+
+            return redirect()->route('airlines.index')->with('error', 'Something went wrong, please try again later');
+        }
     }
 }
