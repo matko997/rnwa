@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id('airplane_id');
             $table->mediumInteger('capacity')->unsigned();
             $table->unsignedInteger('type_id');
-            $table->unsignedInteger('airline_id');
             $table->timestamps();
 
             $table->foreign('type_id')->references('type_id')->on('airplane_type');

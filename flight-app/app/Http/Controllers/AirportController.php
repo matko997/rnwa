@@ -74,7 +74,7 @@ class AirportController extends Controller
             return redirect()->route('airports.index')->with('success', 'Airport deleted successfully');
         } catch (QueryException $e) {
             if ($e->getCode() == 23000) {
-                return redirect()->route('airports.index')->with('error', 'Cannot delete this airport, it is associated with an airline');
+                return redirect()->route('airports.index')->with('error', 'Cannot delete this airport, it is associated with another entity');
             }
 
             return redirect()->route('airports.index')->with('error', 'Something went wrong, please try again later');

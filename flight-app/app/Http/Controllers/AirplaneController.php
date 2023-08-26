@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Ariplane;
+use App\Models\Airline;
+use App\Models\Airplane;
+use App\Models\AirplaneType;
+use App\Models\Airport;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class AirplaneController extends Controller
@@ -12,7 +16,8 @@ class AirplaneController extends Controller
      */
     public function index()
     {
-        //
+        $airplanes = Airplane::with('type')->paginate(10);
+        return view('airplanes.index')->with(['airplanes' => $airplanes]);
     }
 
     /**
@@ -20,7 +25,8 @@ class AirplaneController extends Controller
      */
     public function create()
     {
-        //
+        $airplaneTypes = AirplaneType::all();
+        return view('airplanes.create')->with(['airplaneTypes' => $airplaneTypes]);
     }
 
     /**
@@ -28,13 +34,14 @@ class AirplaneController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Airplane::create($request->except('_token'));
+        return redirect(route('airplanes.index'));
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Ariplane $ariplane)
+    public function show(Airplane $ariplane)
     {
         //
     }
@@ -42,24 +49,39 @@ class AirplaneController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Ariplane $ariplane)
+    public function edit($id)
     {
-        //
+        return view('airplanes.edit')->with(['airplane' => Airplane::find($id),'airplaneTypes' => AirplaneType::all()]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Ariplane $ariplane)
+    public function update(Request $request, $id)
     {
-        //
+        $airplane = Airplane::find($id);
+
+        $airplane->update($request->except('_token'));
+
+        return redirect(route('airplanes.index'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Ariplane $ariplane)
+    public function destroy($id)
     {
-        //
+        try {
+            $airplane = Airplane::findOrFail($id);
+            $airplane->delete();
+
+            return redirect()->route('airplanes.index')->with('success', 'airplane deleted successfully');
+        } catch (QueryException $e) {
+            if ($e->getCode() == 23000) {
+                return redirect()->route('airplanes.index')->with('error', 'Cannot delete this airplane, it is associated with another entity');
+            }
+
+            return redirect()->route('airplanes.index')->with('error', 'Something went wrong, please try again later');
+        }
     }
 }

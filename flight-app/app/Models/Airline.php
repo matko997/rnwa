@@ -22,4 +22,10 @@ class Airline extends Model
     {
         return $this->belongsTo(Airport::class,'base_airport');
     }
+
+
+    public function airplanes()
+    {
+        return $this->belongsToMany(Airplane::class);
+    }
 }
