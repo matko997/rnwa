@@ -12,8 +12,8 @@ class AirportController extends Controller
      */
     public function index()
     {
-        $airports=Airport::paginate(10);
-        return view('airports.index')->with(['airports'=>$airports]);
+        $airports = Airport::paginate(10);
+        return view('airports.index')->with(['airports' => $airports]);
     }
 
     /**
@@ -21,7 +21,7 @@ class AirportController extends Controller
      */
     public function create()
     {
-        //
+        return view('airports.create');
     }
 
     /**
@@ -29,7 +29,8 @@ class AirportController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Airport::create($request->except('_token'));
+        return redirect(route('airports.index'));
     }
 
     /**
@@ -43,24 +44,29 @@ class AirportController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Airport $airport)
+    public function edit($id)
     {
-        //
+        return view('airports.edit')->with(['airport' => Airport::find($id)]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Airport $airport)
+    public function update(Request $request, $id)
     {
-        //
+        $airport = Airport::find($id);
+
+        $airport->update($request->except('_token'));
+
+        return redirect(route('airports.index'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Airport $airport)
+    public function destroy($id)
     {
-        //
+        Airport::destroy($id);
+        return redirect(route('airports.index'));
     }
 }
