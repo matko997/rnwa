@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Airport;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class AirportController extends Controller
@@ -66,7 +67,17 @@ class AirportController extends Controller
      */
     public function destroy($id)
     {
-        Airport::destroy($id);
-        return redirect(route('airports.index'));
+        try {
+            $airport = Airport::findOrFail($id);
+            $airport->delete();
+
+            return redirect()->route('airports.index')->with('success', 'Airport deleted successfully');
+        } catch (QueryException $e) {
+            if ($e->getCode() == 23000) {
+                return redirect()->route('airports.index')->with('error', 'Cannot delete this airport, it is associated with an airline');
+            }
+
+            return redirect()->route('airports.index')->with('error', 'Something went wrong, please try again later');
+        }
     }
 }
