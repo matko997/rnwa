@@ -14,6 +14,11 @@ class Airport extends Model
     protected $fillable = [
         'iata',
         'icao',
-        'name',
+        'name'
     ];
+
+    public function airlines()
+    {
+        return $this->belongsToMany(Airline::class);
+    }
 }

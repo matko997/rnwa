@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AirlineController;
 use App\Http\Controllers\AirportController;
 use App\Models\Airport;
 use Illuminate\Support\Facades\Route;
@@ -20,3 +21,4 @@ Route::get('/', function () {
 });
 
 Route::resource('/airports', AirportController::class);
+Route::resource('/airlines', AirlineController::class);
