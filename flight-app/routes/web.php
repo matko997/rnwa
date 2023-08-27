@@ -26,3 +26,5 @@ Route::resource('/airports', AirportController::class);
 Route::resource('/airlines', AirlineController::class);
 Route::resource('/airplanes', AirplaneController::class);
 Route::resource('/flights', FlightController::class);
+Route::get('/search-flights', [FlightController::class, 'searchFlights']);
+
