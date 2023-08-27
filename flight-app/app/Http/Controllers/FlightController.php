@@ -27,10 +27,10 @@ class FlightController extends Controller
      */
     public function create()
     {
-        $flights = Airport::all();
+        $airports = Airport::all();
         $airplanes = Airplane::with('type')->get();
         $airlines = Airline::all();
-        return view('flights.create')->with(['flights' => $flights, 'airplanes' => $airplanes, 'airlines' => $airlines]);
+        return view('flights.create')->with(['airports' => $airports, 'airplanes' => $airplanes, 'airlines' => $airlines]);
     }
 
     /**
