@@ -53,8 +53,8 @@ console.log(data);
                 html += '<td>' + airline.airlinename + '</td>';
                 html += '<td>' + (airline.airports ? airline.airports.name : 'N/A') + '</td>';
                 html += '<td>';
-                html += '<a href="/airlines/edit/' + airline.id + '" class="btn btn-sm btn-primary">Edit</a> ';
-                html += '<button type="button" class="btn btn-sm btn-danger" onclick="deleteAirline('+ airline.id +')">Delete</button>';
+                html += '<a href="/airlines/' + airline.airline_id + '/edit" class="btn btn-sm btn-primary">Edit</a> ';
+                html += '<button type="button" class="btn btn-sm btn-danger" onclick="deleteAirline('+ airline.airline_id +')">Delete</button>';
                 html += '</td>';
                 html += '</tr>';
             });
@@ -64,6 +64,30 @@ console.log(data);
             html += '</div>';
 
             document.getElementById('search-results').innerHTML = html;
+        }
+
+        function deleteAirline(id) {
+            // Get CSRF token
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+            // Delete request or any other action to delete the airline.
+            fetch(`/airlines/`+id, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken
+                },
+            })
+                .then(response => {
+                    if (response.redirected) {
+                        window.location.href = response.url;
+                    } else {
+                        console.error('Failed to delete airline');
+                    }
+                })
+                .catch((error) => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
         }
 
     </script>
