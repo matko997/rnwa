@@ -6,6 +6,7 @@ use App\Http\Controllers\AirportController;
 use App\Http\Controllers\FlightController;
 use App\Http\Controllers\GoogleAuthController;
 use App\Models\Airport;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,4 +36,8 @@ Route::middleware(['auth'])->group(function () {
 Route::get('login/google', [GoogleAuthController::class, 'redirectToProvider']);
 Route::get('login/google/callback', [GoogleAuthController::class, 'handleProviderCallback']);
 Route::get('/login', [GoogleAuthController::class, 'redirectToProvider'])->name('login');
+Route::post('/logout', function () {
+    Auth::logout();
+    return redirect('/');
+})->name('logout');
 

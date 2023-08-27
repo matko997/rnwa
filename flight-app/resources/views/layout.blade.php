@@ -86,6 +86,13 @@
             @guest
                 <a href="/login/google" class="btn btn-primary">Sign in with Google</a>
             @endguest
+                @auth
+                    <!-- Display this button only if the user is authenticated -->
+                    <form action="/logout" method="POST">
+                        @csrf
+                        <button type="submit" class="btn p-0 btn-outline-light">Sign Out</button>
+                    </form>
+                @endauth
         </div>
     </nav>
 </header>
@@ -99,7 +106,11 @@
         <strong>{{ $message }}</strong>
     </div>
 @endif
-
+@if ($message = Session::get('error'))
+    <div class="alert alert-danger alert-block">
+        <strong>{{ $message }}</strong>
+    </div>
+@endif
 
 
 </body>

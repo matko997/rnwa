@@ -77,6 +77,7 @@ class AirplaneController extends Controller
 
             return redirect()->route('airplanes.index')->with('success', 'airplane deleted successfully');
         } catch (QueryException $e) {
+            dd($e);
             if ($e->getCode() == 23000) {
                 return redirect()->route('airplanes.index')->with('error', 'Cannot delete this airplane, it is associated with another entity');
             }
