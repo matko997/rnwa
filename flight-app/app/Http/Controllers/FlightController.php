@@ -22,15 +22,32 @@ class FlightController extends Controller
         return view('flights.index')->with(['flights' => $flights]);
     }
 
+    public function searchFlights(Request $request)
+    {
+
+        $query = $request->get('query');
+
+        $flights = Flight::where('departure', 'like', "%{$query}%")
+            ->orWhere('arrival', 'like', "%{$query}%")
+            ->orWhereHas('airline', function ($q) use ($query) {
+                $q->where('airlinename', 'like', "%{$query}%");
+            })
+            ->with(['airline', 'airplane.type','source','destination'])
+            ->get();
+
+        return response()->json($flights);
+    }
+
+
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        $flights = Airport::all();
+        $airports = Airport::all();
         $airplanes = Airplane::with('type')->get();
         $airlines = Airline::all();
-        return view('flights.create')->with(['flights' => $flights, 'airplanes' => $airplanes, 'airlines' => $airlines]);
+        return view('flights.create')->with(['airports' => $airports, 'airplanes' => $airplanes, 'airlines' => $airlines]);
     }
 
     /**
