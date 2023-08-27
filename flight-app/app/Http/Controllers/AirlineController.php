@@ -19,6 +19,16 @@ class AirlineController extends Controller
         return view('airlines.index')->with(['airlines' => $airlines]);
     }
 
+    public function search(Request $request) {
+        $query = $request->input('query');
+
+        $airlines = Airline::where('airlinename', 'LIKE', "%{$query}%")
+            ->with('airports')
+            ->get();
+
+        return response()->json($airlines);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
