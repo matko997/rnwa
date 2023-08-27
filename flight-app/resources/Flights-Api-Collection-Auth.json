@@ -15,11 +15,11 @@
                     "basic": [
                         {
                             "key": "username",
-                            "value": "{{username}}"
+                            "value": "john@example.com"
                         },
                         {
                             "key": "password",
-                            "value": "{{password}}"
+                            "value": "password"
                         }
                     ]
                 },
@@ -48,11 +48,11 @@
                     "basic": [
                         {
                             "key": "username",
-                            "value": "{{username}}"
+                            "value": "john@example.com"
                         },
                         {
                             "key": "password",
-                            "value": "{{password}}"
+                            "value": "password"
                         }
                     ]
                 },
@@ -82,11 +82,11 @@
                     "basic": [
                         {
                             "key": "username",
-                            "value": "{{username}}"
+                            "value": "john@example.com"
                         },
                         {
                             "key": "password",
-                            "value": "{{password}}"
+                            "value": "password"
                         }
                     ]
                 },
@@ -124,11 +124,11 @@
                     "basic": [
                         {
                             "key": "username",
-                            "value": "{{username}}"
+                            "value": "john@example.com"
                         },
                         {
                             "key": "password",
-                            "value": "{{password}}"
+                            "value": "password"
                         }
                     ]
                 },
@@ -167,11 +167,11 @@
                     "basic": [
                         {
                             "key": "username",
-                            "value": "{{username}}"
+                            "value": "john@example.com"
                         },
                         {
                             "key": "password",
-                            "value": "{{password}}"
+                            "value": "password"
                         }
                     ]
                 },

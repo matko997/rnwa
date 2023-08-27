@@ -1,12 +1,12 @@
 {
     "info": {
         "_postman_id": "unique-postman-id",
-        "name": "Flight API with Basic Auth",
+        "name": "Airline API with Basic Auth",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
     },
     "item": [
         {
-            "name": "Get All Flights",
+            "name": "Get All Airlines",
             "request": {
                 "method": "GET",
                 "header": [],
@@ -15,16 +15,16 @@
                     "basic": [
                         {
                             "key": "username",
-                            "value": "{{username}}"
+                            "value": "john@example.com"
                         },
                         {
                             "key": "password",
-                            "value": "{{password}}"
+                            "value": "password"
                         }
                     ]
                 },
                 "url": {
-                    "raw": "http://localhost:8000/api/flights",
+                    "raw": "http://localhost:8000/api/airlines",
                     "protocol": "http",
                     "host": [
                         "localhost"
@@ -32,14 +32,14 @@
                     "port": "8000",
                     "path": [
                         "api",
-                        "flights"
+                        "airlines"
                     ]
                 }
             },
             "response": []
         },
         {
-            "name": "Get Single Flight",
+            "name": "Get Single Airline",
             "request": {
                 "method": "GET",
                 "header": [],
@@ -48,16 +48,16 @@
                     "basic": [
                         {
                             "key": "username",
-                            "value": "{{username}}"
+                            "value": "john@example.com"
                         },
                         {
                             "key": "password",
-                            "value": "{{password}}"
+                            "value": "password"
                         }
                     ]
                 },
                 "url": {
-                    "raw": "http://localhost:8000/api/flights/:id",
+                    "raw": "http://localhost:8000/api/airlines/:id",
                     "protocol": "http",
                     "host": [
                         "localhost"
@@ -65,7 +65,7 @@
                     "port": "8000",
                     "path": [
                         "api",
-                        "flights",
+                        "airlines",
                         ":id"
                     ]
                 }
@@ -73,7 +73,7 @@
             "response": []
         },
         {
-            "name": "Create Flight",
+            "name": "Create Airline",
             "request": {
                 "method": "POST",
                 "header": [],
@@ -82,17 +82,17 @@
                     "basic": [
                         {
                             "key": "username",
-                            "value": "{{username}}"
+                            "value": "john@example.com"
                         },
                         {
                             "key": "password",
-                            "value": "{{password}}"
+                            "value": "password"
                         }
                     ]
                 },
                 "body": {
                     "mode": "raw",
-                    "raw": "{ \"departure\": \"2023-08-26T12:59\", \"arrival\": \"2023-08-27T12:59\", \"airline_id\": 8, \"from\": 1, \"to\": 2, \"airplane_id\": 2 }",
+                    "raw": "{ \"airlinename\": \"Example Airline\", \"iata\": \"aa\", \"base_airport\": 1 }",
                     "options": {
                         "raw": {
                             "language": "json"
@@ -100,7 +100,7 @@
                     }
                 },
                 "url": {
-                    "raw": "http://localhost:8000/api/flights",
+                    "raw": "http://localhost:8000/api/airlines",
                     "protocol": "http",
                     "host": [
                         "localhost"
@@ -108,14 +108,14 @@
                     "port": "8000",
                     "path": [
                         "api",
-                        "flights"
+                        "airlines"
                     ]
                 }
             },
             "response": []
         },
         {
-            "name": "Update Flight",
+            "name": "Update Airline",
             "request": {
                 "method": "PUT",
                 "header": [],
@@ -124,17 +124,17 @@
                     "basic": [
                         {
                             "key": "username",
-                            "value": "{{username}}"
+                            "value": "john@example.com"
                         },
                         {
                             "key": "password",
-                            "value": "{{password}}"
+                            "value": "password"
                         }
                     ]
                 },
                 "body": {
                     "mode": "raw",
-                    "raw": "{ \"departure\": \"2023-09-01\", \"arrival\": \"2023-09-02\" }",
+                    "raw": "{ \"airlinename\": \"Example Airline\", \"iata\": \"ah\", \"base_airport\": 1 }",
                     "options": {
                         "raw": {
                             "language": "json"
@@ -142,7 +142,7 @@
                     }
                 },
                 "url": {
-                    "raw": "http://localhost:8000/api/flights/:id",
+                    "raw": "http://localhost:8000/api/airlines/:id",
                     "protocol": "http",
                     "host": [
                         "localhost"
@@ -150,7 +150,7 @@
                     "port": "8000",
                     "path": [
                         "api",
-                        "flights",
+                        "airlines",
                         ":id"
                     ]
                 }
@@ -158,7 +158,7 @@
             "response": []
         },
         {
-            "name": "Delete Flight",
+            "name": "Delete Airline",
             "request": {
                 "method": "DELETE",
                 "header": [],
@@ -167,16 +167,16 @@
                     "basic": [
                         {
                             "key": "username",
-                            "value": "{{username}}"
+                            "value": "john@example.com"
                         },
                         {
                             "key": "password",
-                            "value": "{{password}}"
+                            "value": "password"
                         }
                     ]
                 },
                 "url": {
-                    "raw": "http://localhost:8000/api/flights/:id",
+                    "raw": "http://localhost:8000/api/airlines/:id",
                     "protocol": "http",
                     "host": [
                         "localhost"
@@ -184,7 +184,7 @@
                     "port": "8000",
                     "path": [
                         "api",
-                        "flights",
+                        "airlines",
                         ":id"
                     ]
                 }

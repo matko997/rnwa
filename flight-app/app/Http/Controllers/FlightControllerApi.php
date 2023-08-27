@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class FlightControllerApi extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth.basic');
+    }
+
     public function index()
     {
         try {
