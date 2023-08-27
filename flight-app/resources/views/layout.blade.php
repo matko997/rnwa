@@ -5,14 +5,17 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('styles.css') }}">
     <!-- Add this to the <head> section of your layout -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css">
+    <!-- Google Sign-In JavaScript library -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id" content="{{ env('GOOGLE_CLIENT_ID') }}">
     <!-- ... Other CSS files ... -->
-
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Add this at the end of the <body> section, before other scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- ... Other scripts ... -->
 
     <style>
-        /* Add custom CSS styles for the layout */
         body {
             margin: 0;
             padding: 0;
@@ -67,13 +70,23 @@
 </head>
 <body>
 <header>
-    <nav>
-        <ul>
-            <li><a href="/flights">Flights</a></li>
-            <li><a href="/airlines">Airlines</a></li>
-            <li><a href="/airplanes">Airplanes</a></li>
-            <li><a href="/airports">Airports</a></li>
-        </ul>
+    <nav class="d-flex justify-content-between">
+        <div>
+            @auth
+                <!-- Display these links only if the user is authenticated -->
+                <ul class="d-inline-flex mb-0">
+                    <li><a href="/flights">Flights</a></li>
+                    <li><a href="/airlines">Airlines</a></li>
+                    <li><a href="/airplanes">Airplanes</a></li>
+                    <li><a href="/airports">Airports</a></li>
+                </ul>
+            @endauth
+        </div>
+        <div>
+            @guest
+                <a href="/login/google" class="btn btn-primary">Sign in with Google</a>
+            @endguest
+        </div>
     </nav>
 </header>
 
@@ -81,7 +94,6 @@
     <h1>Welcome to the Flight Management System</h1>
 </main>
 @yield('content')
-
 @if ($message = Session::get('success'))
     <div class="alert alert-success alert-block">
         <strong>{{ $message }}</strong>
@@ -89,10 +101,6 @@
 @endif
 
 
-@if ($message = Session::get('error'))
-    <div class="alert alert-danger alert-block">
-        <strong>{{ $message }}</strong>
-    </div>
-@endif
+
 </body>
 </html>

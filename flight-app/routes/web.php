@@ -4,6 +4,7 @@ use App\Http\Controllers\AirlineController;
 use App\Http\Controllers\AirplaneController;
 use App\Http\Controllers\AirportController;
 use App\Http\Controllers\FlightController;
+use App\Http\Controllers\GoogleAuthController;
 use App\Models\Airport;
 use Illuminate\Support\Facades\Route;
 
@@ -22,7 +23,16 @@ Route::get('/', function () {
     return view('layout');
 });
 
-Route::resource('/airports', AirportController::class);
-Route::resource('/airlines', AirlineController::class);
-Route::resource('/airplanes', AirplaneController::class);
-Route::resource('/flights', FlightController::class);
+Route::middleware(['auth'])->group(function () {
+    Route::resource('/airports', AirportController::class);
+    Route::resource('/airlines', AirlineController::class);
+    Route::resource('/airplanes', AirplaneController::class);
+    Route::resource('/flights', FlightController::class);
+});
+
+// routes/web.php
+
+Route::get('login/google', [GoogleAuthController::class, 'redirectToProvider']);
+Route::get('login/google/callback', [GoogleAuthController::class, 'handleProviderCallback']);
+Route::get('/login', [GoogleAuthController::class, 'redirectToProvider'])->name('login');
+
