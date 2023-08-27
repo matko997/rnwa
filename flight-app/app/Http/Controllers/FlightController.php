@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Airline;
 use App\Models\Airplane;
+use App\Models\AirplaneType;
 use App\Models\Airport;
 use App\Models\Flight;
 use Illuminate\Database\QueryException;
@@ -17,7 +18,7 @@ class FlightController extends Controller
      */
     public function index()
     {
-        $flights = Flight::with(['airplane.type','source','destination','airline'])->paginate(10);
+        $flights = Flight::with(['airplane.type', 'source', 'destination', 'airline'])->paginate(10);
         return view('flights.index')->with(['flights' => $flights]);
     }
 
@@ -29,7 +30,7 @@ class FlightController extends Controller
         $flights = Airport::all();
         $airplanes = Airplane::with('type')->get();
         $airlines = Airline::all();
-        return view('flights.create')->with(['flights'=>$flights,'airplanes'=>$airplanes,'airlines'=>$airlines]);
+        return view('flights.create')->with(['flights' => $flights, 'airplanes' => $airplanes, 'airlines' => $airlines]);
     }
 
     /**
@@ -52,17 +53,21 @@ class FlightController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Flight $flight)
+    public function edit($id)
     {
-        //
+        return view('flights.edit')->with(['flight' => Flight::find($id), 'airplanes' => Airplane::all(), 'airlines' => Airline::all(), 'airports' => Airport::all()]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Flight $flight)
+    public function update(Request $request, $id)
     {
-        //
+        $flight = Flight::find($id);
+
+        $flight->update($request->except('_token'));
+
+        return redirect(route('flights.index'));
     }
 
     /**
