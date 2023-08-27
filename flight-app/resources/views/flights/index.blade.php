@@ -65,7 +65,7 @@ console.log(data);
                 html += '<td>' + (flight.airline ? flight.airline.airlinename : 'N/A') + '</td>';
                 html += '<td>' + (flight.airplane && flight.airplane.type ? flight.airplane.type.identifier : 'N/A') + '</td>';
                 html += '<td>';
-                html += '<a href="/flights/edit/' + flight.flight_id + '" class="btn btn-sm btn-primary">Edit</a>';
+                html += '<a href="/flights/' + flight.flight_id + '/edit"  class="btn btn-sm btn-primary">Edit</a>';
                 html += ' <button type="button" class="btn btn-sm btn-danger" onclick="deleteFlight('+ flight.flight_id +')">Delete</button>';
                 html += '</td>';
                 html += '</tr>';
@@ -77,6 +77,32 @@ console.log(data);
 
             $('#search-results').html(html);
         }
+
+
+        function deleteFlight(id) {
+            // Get CSRF token
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+            // Delete request or any other action to delete the airline.
+            fetch(`/flights/`+id, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken
+                },
+            })
+                .then(response => {
+                    if (response.redirected) {
+                        window.location.href = response.url;
+                    } else {
+                        console.error('Failed to delete flight');
+                    }
+                })
+                .catch((error) => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+        }
+
 
     </script>
 @endsection
