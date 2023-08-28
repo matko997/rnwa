@@ -17,7 +17,7 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="to">From:</label>
+                <label for="to">To:</label>
                 <select class="form-select" name="to" id="to" required>
                     <option value="">Pick the finish destination</option>
                     @foreach($airports as $airport)
@@ -43,7 +43,7 @@
                 <select class="form-select" name="airplane_id" id="airplane_id" required>
                     <option value="">Pick the airplane type</option>
                     @foreach($airplanes as $airplane)
-                        <option value="{{ $airplane->type->type_id }}"> {{ $airplane->type->identifier }}</option>
+                        <option value="{{ $airplane->airplane_id }}"> {{ $airplane->type->identifier }}</option>
                     @endforeach
                 </select>
             </div>
