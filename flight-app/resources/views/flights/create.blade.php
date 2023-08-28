@@ -17,7 +17,7 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="to">From:</label>
+                <label for="to">To:</label>
                 <select class="form-select" name="to" id="to" required>
                     <option value="">Pick the finish destination</option>
                     @foreach($airports as $airport)
