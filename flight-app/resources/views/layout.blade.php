@@ -73,6 +73,7 @@
             <li><a href="/airlines">Airlines</a></li>
             <li><a href="/airplanes">Airplanes</a></li>
             <li><a href="/airports">Airports</a></li>
+            <li><a href="/passengers">Passengers</a></li>
         </ul>
     </nav>
 </header>
