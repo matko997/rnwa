@@ -3,6 +3,7 @@
 use App\Http\Controllers\AirlineController;
 use App\Http\Controllers\AirplaneController;
 use App\Http\Controllers\AirportController;
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\FlightController;
 use App\Http\Controllers\PassengerController;
 use App\Models\Airport;
@@ -28,3 +29,4 @@ Route::resource('/airlines', AirlineController::class);
 Route::resource('/airplanes', AirplaneController::class);
 Route::resource('/passengers', PassengerController::class);
 Route::resource('/flights', FlightController::class);
+Route::resource('/bookings', BookingController::class);
